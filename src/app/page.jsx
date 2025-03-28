@@ -9,10 +9,14 @@ import ImageBox from "../components/ImageBox";
 import {NavBarHome} from "../components/Navbar.jsx"
 import SearchBar from "../components/SearchBar.jsx"
 import Foot from "../components/Footer.jsx";
-
+import SearchForm from "./searchBox.jsx";
 
 
 export default function Home() {
+	const handleSearch = (data) => {
+    console.log("Search data:", data);
+  };
+
 	return (
 		<div className="container-m">
             <NavBarHome/>
@@ -21,7 +25,9 @@ export default function Home() {
             <div className="Content">
 				<div>
 					<CarousaL />
-
+					<div className="search-form-div">
+                    	<SearchForm />
+                	</div>
 					<div className="Home_Page_Background">
 
 					    <div className="Home_Page_Content">

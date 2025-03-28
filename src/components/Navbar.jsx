@@ -7,10 +7,34 @@ import { useEffect, useState } from "react";
 export function NavBarHome() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  const [logo, setLogo] = useState("");
+
+  const fetchSession = async () => {
+      const sessionCookie = document.cookie.split("; ").find(row => row.startsWith("session-id="));
+      const sessionId = sessionCookie ? sessionCookie.split("=")[1] : null;
+
+      if (sessionId) {
+          try {
+              const res = await fetch(`/api/route?model=sessions&id=${sessionId}`);
+              const data = await res.json();
+
+              const res_user = await fetch(`/api/route?model=users&id=${data.record.userId}`)
+              const data_user = await res_user.json();
+
+              setLogo(data_user.record.user_name[0].toUpperCase())
+          } catch (error) {
+              console.error("Error fetching session data:", error);
+          }
+          setIsLoggedIn(true);
+      }
+  };
+
   useEffect(() => {
-    const hasSession = document.cookie.includes("session-id=");
-    setIsLoggedIn(hasSession);
+      fetchSession();
   }, []);
+
+  console.log(logo)
+
 
   return (
     <nav className="NavbarHome">
@@ -23,13 +47,7 @@ export function NavBarHome() {
 
         {isLoggedIn ? (
           <li>
-            <img 
-              className = "navbar-profile-img"
-              src="/images/icon-192x192.png" 
-              alt="Gmail" 
-              width="30px" 
-              style={{ cursor: 'pointer' }} 
-            />
+            <button className="avatar">{logo}</button>
           </li>
         ) : (
           <li><Link href="/Login"><p className="navbar-special-button">Log in</p></Link></li>
@@ -44,10 +62,32 @@ export function NavBarHome() {
 export function NavBarNormal() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  const [logo, setLogo] = useState("");
+
+  const fetchSession = async () => {
+      const sessionCookie = document.cookie.split("; ").find(row => row.startsWith("session-id="));
+      const sessionId = sessionCookie ? sessionCookie.split("=")[1] : null;
+
+      if (sessionId) {
+          try {
+              const res = await fetch(`/api/route?model=sessions&id=${sessionId}`);
+              const data = await res.json();
+
+              const res_user = await fetch(`/api/route?model=users&id=${data.record.userId}`)
+              const data_user = await res_user.json();
+              setLogo(data_user.record.user_name[0].toUpperCase())
+          } catch (error) {
+              console.error("Error fetching session data:", error);
+          }
+          setIsLoggedIn(true);
+      }
+  };
+
   useEffect(() => {
-    const hasSession = document.cookie.includes("session-id=");
-    setIsLoggedIn(hasSession);
+      fetchSession();
   }, []);
+
+  
 
   return (
     <nav className="Navbar_Normal">
@@ -60,13 +100,7 @@ export function NavBarNormal() {
 
         {isLoggedIn ? (
           <li>
-            <img 
-              className = "navbar-profile-img"
-              src="/images/icon-192x192.png" 
-              alt="Gmail" 
-              width="30px" 
-              style={{ cursor: 'pointer' }} 
-            />
+            <button className="avatar">{logo}</button>
           </li>
         ) : (
           <li><Link href="/Login"><p className="navbar-special-button">Log in</p></Link></li>

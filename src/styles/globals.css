@@ -67,7 +67,7 @@ body {
 }
 .Home_Page_Background {
     position: relative; /* Ensures it stays below */
-    margin-top: 250px; /*REMOVE THIS FOR NON-INTRODUCTORY PAGES*/
+    margin-top: 244px; /*REMOVE THIS FOR NON-INTRODUCTORY PAGES*/
 
     background-image: url('/images/Background.png'); /* Use absolute path */
     background-size: cover; /* Ensures the image covers the div */

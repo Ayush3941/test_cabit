@@ -17,7 +17,7 @@ export default function PaymentPage() {
               className=" p-4 rounded-lg shadow-lg w-100"
               style={{ maxWidth: "900px", backgroundColor:"rgba(255,255,255,.75)"}}
             >
-              <div class="row d-flex justify-content-between mb-3">
+              <div className="row d-flex justify-content-between mb-3">
                 {/* Left Section - Payment Info & Form */}
                 <div className="col-md-6 mb-4 mb-md-0 " >
                   <div className="d-flex align-items-center mb-3 ">

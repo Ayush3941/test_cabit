@@ -34,6 +34,7 @@ export default function Sidebar({ activeSection, setActiveSection, sidebarVisibl
         </button>
         <ul className={`dashboard-overview-content ${tripOpen ? "open" : ""}`}>
           <li>Wed 19/2/25</li>
+          <li>Thu 20/2/25</li>
           <li>Fri 21/2/25</li>
           <li>Sat 22/2/25</li>
         </ul>

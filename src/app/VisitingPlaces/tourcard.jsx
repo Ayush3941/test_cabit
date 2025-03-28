@@ -15,9 +15,11 @@ export default function PlaceCard({
   description = 'Majestically located on the banks of Yamuna River, this wonder of the world was built by the Mughal Emperor Shah Jahan as a memorial for his beloved wife Mumtaz Mahal.',
   exploreText = 'EXPLORE',
   planText = 'PLAN TRIP',
-  onExplore = () => {},
-  onPlanTrip = () => {}
-}) {
+  }) {
+
+  const onExplore = () => {router.push(`/ItineraryPage`);}
+ 
+
 
   const router = useRouter();
   const handlePlanTrip = () => {

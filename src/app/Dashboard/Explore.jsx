@@ -1,78 +1,72 @@
-import React from "react";
+"use client"
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import NewPlaceCard from "../../components/Dashboard/explorecard";
 
-const places = [
-  {
-    image: "https://example.com/image1.jpg",
-    title: "Hazratganj",
-    description: "A bustling market in the heart of Lucknow.",
-  },
-  {
-    image: "https://example.com/image2.jpg",
-    title: "Bada Imambada",
-    description: "A historical marvel known for its Bhool Bhulaiya.",
-  },
-  {
-    image: "https://example.com/image3.jpg",
-    title: "Chota Imambada",
-    description: "A stunning monument with Persian influence.",
-  },
-  {
-    image: "https://example.com/image4.jpg",
-    title: "The Residency",
-    description: "Ruins of a British Residency, a key site from 1857.",
-  },
-  {
-    image: "https://example.com/image5.jpg",
-    title: "Aminabad",
-    description: "A popular shopping destination with a historical touch.",
-  },
-  {
-    image: "https://example.com/image6.jpg",
-    title: "Janeshwar Mishra Park",
-    description: "One of Asia’s largest parks with lush greenery.",
-  },
-  {
-    image: "https://example.com/image7.jpg",
-    title: "Chowk",
-    description: "Famous for authentic Tunday Kababi and handicrafts.",
-  },
-  {
-    image: "https://example.com/image8.jpg",
-    title: "The Memorial Park",
-    description: "A grand monument dedicated to Dr. B.R. Ambedkar.",
-  },
-  {
-    image: "https://example.com/image9.jpg",
-    title: "Rumi Darwaza",
-    description: "An iconic Mughal-era gateway symbolizing Lucknow.",
-  },
-  {
-    image: "https://example.com/image10.jpg",
-    title: "Dilkusha Kothi",
-    description: "A beautiful 18th-century hunting lodge in ruins.",
-  },
-];
+import "./Explore.css";
 
+import { env } from "../../data/env/client"
+import { z } from "zod"
+
+
+
+
+const API_KEY = env.NEXT_PUBLIC_UNSPLASH_API_KEY
+
+
+
+
+
+const CITY = "Lucknow";
 
 const ExploreSection = () => {
-  return (
-    <div>
+  const [places, setPlaces] = useState([]);
 
+  useEffect(() => {
+    const fetchImages = async () => {
+      try {
+        const response = await axios.get(
+          `https://api.unsplash.com/search/photos`,
+          {
+            params: {
+              query: `${CITY} landmarks`,
+              per_page: 10,
+              orientation: "landscape",
+            },
+            headers: {
+              Authorization: `Client-ID ${API_KEY}`,
+            },
+          }
+        );
+
+        const newPlaces = response.data.results.map((image, index) => ({
+          image: image.urls.regular,
+          title: `Place ${index + 1}`,
+          description: image.alt_description || "A beautiful location.",
+        }));
+
+        setPlaces(newPlaces);
+      } catch (error) {
+        console.error("Error fetching images:", error);
+      }
+    };
+
+    fetchImages();
+  }, []);
+
+  return (
     <div className="explore-container">
-      <h3 style={{display: "block",flex: "none",  alignSelf: "auto", width: "100%" }}>
-        Recommend Places To Visit
+      <h3 style={{ display: "block", flex: "none", alignSelf: "auto", width: "100%", color: "white" }}>
+        Recommend Places To Visit in {CITY}
       </h3>
 
-      {places.map((place, index) => (
-        <NewPlaceCard
-          key={index}
-          image={place.image}
-          title={place.title}
-          description={place.description}
-        />
-      ))}
-    </div>
+      {places.length > 0 ? (
+        places.map((place, index) => (
+          <NewPlaceCard key={index} image={place.image} title={place.title} description={place.description} />
+        ))
+      ) : (
+        <p>Loading...</p>
+      )}
     </div>
   );
 };

@@ -1,0 +1,126 @@
+.modal-overlay {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 75%;
+    height: 75%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translate(-50%, -50%);
+    z-index: 3000;
+   
+}
+
+
+.modal-content-stuff {
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    height: 550px;
+    
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 1);
+    padding: 25px;
+    position: relative;
+    animation: fadeIn 0.3s ease-in-out;
+    background: #ffffff;
+}
+
+.modal-image {
+    width: 100%;
+    height: 230px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 10px;
+    color: #333;
+}
+
+.modal-details {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    font-weight: 600;
+    color: #555;
+    margin: 15px 0;
+}
+
+.modal-highlights {
+    grid-column: span 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+}
+
+.modal-highlights li {
+    font-size: 14px;
+    color: #444;
+    padding: 8px 14px;
+    background: #f1f1f1;
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+.close-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    font-size: 22px;
+    cursor: pointer;
+    color: #888;
+    background: none;
+    border: none;
+    transition: 0.3s ease-in-out;
+
+}
+
+.close-btn:hover {
+    color: #ff4d4d;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-highlights {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); /* Adjusted size */
+    gap: 5px; /* Reduced gap */
+    justify-content: center;
+    padding: 2px;
+    margin-top: 5px;
+}
+
+.model-highlight-item-sample1{
+    font-size: 10px !important;
+    color: #444;
+    padding: 2px 3px; /* Smaller padding */
+    background: linear-gradient(135deg, #f3f3f3 0%, #e0e0e0 100%);
+    border-radius: 6px; /* Slightly smaller radius */
+    text-align: center;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+}
+
+.highlight-item:hover {
+    background: linear-gradient(135deg, #e0e0e0 0%, #cccccc 100%);
+    transform: scale(1.03);
+}
+
