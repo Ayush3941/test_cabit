@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Notes.css";
 
+
 import { env } from "../../data/env/client"
 import { z } from "zod"
 
@@ -8,11 +9,13 @@ import { z } from "zod"
 
 const HUGGING_API_KEY = env.NEXT_PUBLIC_HUGGING_FACE_API_KEY;
 
+
 const Chatbot = () => {
   const [messages, setMessages] = useState([
     { text: "Hello! Ask me anything.", sender: "bot" }
   ]);
   const [input, setInput] = useState("");
+
 
 
 
@@ -45,6 +48,7 @@ const Chatbot = () => {
 
   setInput("");
 };
+
 
 
 
