@@ -48,7 +48,7 @@ export async function signIn(unsafeData: unknown): Promise<string | void> {
   if (!isCorrectPassword) return "Unable to log you in";
 
   await createUserSession(user, await cookies());
-  redirect("/Dashboard");
+  redirect("/");
 }
 
 export async function signUp(unsafeData: unknown): Promise<string | void> {
@@ -98,7 +98,7 @@ export async function signUp(unsafeData: unknown): Promise<string | void> {
     return "Unable to create account";
   }
 
-  redirect("/Dashboard");
+  redirect("/");
 }
 
 export async function logOut() {

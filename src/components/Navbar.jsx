@@ -9,6 +9,13 @@ export function NavBarHome() {
 
   const [logo, setLogo] = useState("");
 
+  const [isOpen, setIsOpen] = useState(false);
+
+
+  const deleteSession = async () =>{
+    document.cookie = "session-id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/";
+    location.reload();
+  }
   const fetchSession = async () => {
       const sessionCookie = document.cookie.split("; ").find(row => row.startsWith("session-id="));
       const sessionId = sessionCookie ? sessionCookie.split("=")[1] : null;
@@ -22,6 +29,7 @@ export function NavBarHome() {
               const data_user = await res_user.json();
 
               setLogo(data_user.record.user_name[0].toUpperCase())
+              console.log("Login Running ")
           } catch (error) {
               console.error("Error fetching session data:", error);
           }
@@ -33,7 +41,7 @@ export function NavBarHome() {
       fetchSession();
   }, []);
 
-  console.log(logo)
+
 
 
   return (
@@ -47,7 +55,24 @@ export function NavBarHome() {
 
         {isLoggedIn ? (
           <li>
-            <button className="avatar">{logo}</button>
+            <div className="dropdown">
+              <button className="avatar" onClick={() => { setIsOpen(!isOpen);console.log("avatar Run",isOpen);}}>
+                {logo}
+              </button>
+              {isOpen && (
+                <div className="avatar-dropdown-menu">
+                    <Link href="/Dashboard"><p>Dashboard</p></Link>
+                  <div className="avatart-item-separator"></div>
+                    <Link href="#"><p >Settings</p></Link>
+                  <div className="avatart-item-separator"></div>
+                    <Link href="#"><p >Help</p></Link>
+                  <div className="avatart-item-separator"></div>
+                    <Link href="#"><p >Set Your Language</p></Link>
+                  <div className="avatart-item-separator"></div>
+                    <button onClick={deleteSession}><p className="avatar-item-logout">Log Out</p></button>
+                </div>
+              )}
+            </div>
           </li>
         ) : (
           <li><Link href="/Login"><p className="navbar-special-button">Log in</p></Link></li>
@@ -64,6 +89,12 @@ export function NavBarNormal() {
 
   const [logo, setLogo] = useState("");
 
+  const [isOpen, setIsOpen] = useState(false);
+
+  const deleteSession = async () =>{
+    document.cookie = "session-id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/";
+    location.reload();
+  }
   const fetchSession = async () => {
       const sessionCookie = document.cookie.split("; ").find(row => row.startsWith("session-id="));
       const sessionId = sessionCookie ? sessionCookie.split("=")[1] : null;
@@ -87,7 +118,6 @@ export function NavBarNormal() {
       fetchSession();
   }, []);
 
-  
 
   return (
     <nav className="Navbar_Normal">
@@ -100,7 +130,25 @@ export function NavBarNormal() {
 
         {isLoggedIn ? (
           <li>
-            <button className="avatar">{logo}</button>
+            <div className="dropdown">
+              <button className="avatar" onClick={() => { setIsOpen(!isOpen);console.log("avatar Run",isOpen);}}>
+                {logo}
+              </button>
+              {isOpen && (
+                <div className="avatar-dropdown-menu">
+                    <Link href="/Dashboard"><p>Dashboard</p></Link>
+                  <div className="avatart-item-separator"></div>
+                    <Link href="#"><p >Settings</p></Link>
+                  <div className="avatart-item-separator"></div>
+                    <Link href="#"><p >Help</p></Link>
+                  <div className="avatart-item-separator"></div>
+                    <Link href="#"><p >Set Your Language</p></Link>
+                  <div className="avatart-item-separator"></div>
+                    <button onClick={deleteSession}><p className="avatar-item-logout">Log Out</p></button>
+
+                </div>
+              )}
+            </div>
           </li>
         ) : (
           <li><Link href="/Login"><p className="navbar-special-button">Log in</p></Link></li>

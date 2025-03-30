@@ -60,7 +60,7 @@ export async function GET(
     );
   }
 
-  redirect("/Dashboard");
+  redirect("/");
 }
 
 async function connectUserToAccount(
