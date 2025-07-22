@@ -3,7 +3,7 @@ import { eq, lt, gte, ne } from 'drizzle-orm';
 import { Pool } from "pg";
 import { UserTable, Drivers, SessionTable, Itinerary, Rides, Distress ,contactUsQueries} from "../../../drizzle/schema";
 
-const dbConfig = { connectionString: "postgresql://ayush:pass@localhost:5432/cabit" };
+const dbConfig = { connectionString: "postgresql://postgres:maggiatta123@db.peykhrcroyixquwxmbhe.supabase.co:5432/postgres" };
 const pool = new Pool(dbConfig);
 const db = drizzle(pool);
  const tables = {
