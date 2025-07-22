@@ -1,12 +1,10 @@
 const { defineConfig } = require("drizzle-kit");
-const { z } = require("zod");
-const { env } = require("./src/data/env/server");
 
 module.exports = defineConfig({
-  dialect: "postgresql",  
+  schema: "./src/drizzle/schema.js", // Or .ts if you want
   out: "./src/drizzle/migrations",
-  schema: "./src/drizzle/schema.ts",
+  dialect: "postgresql",
   dbCredentials: {
-    url: env.DB_URL,
+    url: "postgresql://postgres:maggiatta123@db.peykhrcroyixquwxmbhe.supabase.co:5432/postgres",
   },
 });
