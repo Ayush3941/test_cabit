@@ -7,7 +7,7 @@ let db;
 
 if (!global._db) {
   const pool = new Pool({
-    connectionString: env.DB_URL,
+    connectionString: "postgresql://postgres:maggiatta123@db.peykhrcroyixquwxmbhe.supabase.co:5432/postgres",
     ssl: {
       rejectUnauthorized: false, // Supabase requires this on Vercel
     },
