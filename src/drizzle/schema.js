@@ -1,11 +1,9 @@
-// drizzle/schema.ts
 import {
   pgTable, varchar, text, pgEnum, integer, bigserial,
   timestamp, decimal, jsonb, smallint, date, uuid,
   serial, bigint, boolean, primaryKey
 } from "drizzle-orm/pg-core";
 import { sql, relations } from "drizzle-orm";
-
 
 export const genderEnum = pgEnum("user_gender", ["male", "female", "other"]);
 export const roleEnum = pgEnum("role", ["user", "driver", "admin"]);
@@ -14,12 +12,9 @@ export const tripStatusEnum = pgEnum("trip_status", ["completed", "ongoing", "ca
 export const paymentStatusEnum = pgEnum("payment_status", ["pending", "paid", "failed"]);
 export const rideStatusEnum = pgEnum("ride_status", ["ongoing", "successful", "failed"]);
 export const distressStatusEnum = pgEnum("distress_status", ["active", "inactive"]);
-export const oAuthProviders = ["discord", "github","google"] as const
-export type OAuthProvider = (typeof oAuthProviders)[number]
-export const oAuthProviderEnum = pgEnum("oauth_provides", oAuthProviders)
-export const issueEnum = pgEnum('issue_type', ['Trip Issue','Cab Issue','Payment Issue','App Issue','Other',]);
-
-
+export const oAuthProviders = ["discord", "github", "google"];
+export const oAuthProviderEnum = pgEnum("oauth_provides", oAuthProviders);
+export const issueEnum = pgEnum('issue_type', ['Trip Issue','Cab Issue','Payment Issue','App Issue','Other']);
 
 export const UserTable = pgTable("users", {
   user_id: uuid('user_id').defaultRandom().primaryKey(),
@@ -37,7 +32,6 @@ export const UserTable = pgTable("users", {
   more_info: jsonb("more_info").default(sql`'{}'::jsonb`),
 });
 
-
 export const Drivers = pgTable("drivers", {
   driver_id: bigint("driver_id", { mode: "number" }).primaryKey(),
   user_id: uuid("user_id").notNull().references(() => UserTable.user_id, { onDelete: "cascade" }),
@@ -53,7 +47,6 @@ export const Drivers = pgTable("drivers", {
   more_info: jsonb("more_info").default(sql`'{}'::jsonb`),
 });
 
-
 export const SessionTable = pgTable("sessions", {
   id: varchar("id", { length: 512 }).primaryKey(),
   userId: uuid("user_id").notNull().references(() => UserTable.user_id, { onDelete: "cascade" }),
@@ -61,7 +54,6 @@ export const SessionTable = pgTable("sessions", {
   createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
   expiresAt: timestamp("expires_at", { mode: "date" }).notNull(),
 });
-
 
 export const Itinerary = pgTable("itinerary", {
   session_id: serial("session_id").primaryKey(),
@@ -74,7 +66,6 @@ export const Itinerary = pgTable("itinerary", {
   payment_status: paymentStatusEnum("payment_status"),
   cookie: jsonb("cookie").default(null),
 });
-
 
 export const Rides = pgTable("rides", {
   ride_id: serial("ride_id").primaryKey(),
@@ -92,7 +83,6 @@ export const Rides = pgTable("rides", {
   path_taken: jsonb("path_taken").default(sql`'{}'::jsonb`),
   remark: jsonb("remark").default(sql`'{}'::jsonb`),
 });
-
 
 export const Distress = pgTable("distress", {
   ride_id: serial("ride_id").primaryKey().references(() => Rides.ride_id),
@@ -115,7 +105,6 @@ export const Distress = pgTable("distress", {
   notes: text("notes"),
 });
 
-
 export const UserOAuthAccountTable = pgTable(
   "user_oauth_accounts",
   {
@@ -130,7 +119,6 @@ export const UserOAuthAccountTable = pgTable(
   ]
 );
 
-
 export const userOauthAccountRelationships = relations(
   UserOAuthAccountTable,
   ({ one }) => ({
@@ -140,7 +128,6 @@ export const userOauthAccountRelationships = relations(
     }),
   })
 );
-
 
 export const contactUsQueries = pgTable('contactus_queries', {
   query_id: uuid('query_id').defaultRandom().primaryKey(),

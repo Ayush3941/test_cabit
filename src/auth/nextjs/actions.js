@@ -4,7 +4,7 @@ import { z } from "zod";
 import { redirect } from "next/navigation";
 import { signInSchema, signUpSchema } from "./schemas";
 import { db } from "../../drizzle/db";
-import { OAuthProvider, UserTable } from "../../drizzle/schema";
+import { UserTable } from "../../drizzle/schema";
 import { eq } from "drizzle-orm";
 import {
   comparePasswords,
@@ -14,12 +14,8 @@ import {
 import { cookies } from "next/headers";
 import { createUserSession, removeUserFromSession } from "../core/session";
 import { getOAuthClient } from "../core/oauth/base";
-import { InferInsertModel } from "drizzle-orm";
 
-// Type for inserting into UserTable
-type InsertUser = InferInsertModel<typeof UserTable>;
-
-export async function signIn(unsafeData: unknown): Promise<string | void> {
+export async function signIn(unsafeData) {
   const parsed = signInSchema.safeParse(unsafeData);
   if (!parsed.success) return "Unable to log you in";
 
@@ -51,7 +47,7 @@ export async function signIn(unsafeData: unknown): Promise<string | void> {
   redirect("/");
 }
 
-export async function signUp(unsafeData: unknown): Promise<string | void> {
+export async function signUp(unsafeData) {
   const parsed = signUpSchema.safeParse(unsafeData);
   if (!parsed.success) {
     console.error("Schema validation failed:", parsed.error.format());
@@ -70,14 +66,13 @@ export async function signUp(unsafeData: unknown): Promise<string | void> {
     const salt = generateSalt();
     const hashedPassword = await hashPassword(data.user_password, salt);
 
-    const userData: InsertUser = {
+    const userData = {
       user_name: data.user_name,
       email: data.email,
       user_password: hashedPassword,
       salt,
       user_phone: data.user_phone,
-      // Optional fields (null/defaults if needed)
-      user_gender: "male", // or handle this from frontend
+      user_gender: "male",
       role: "user",
       client_avg_rating: "0.0",
     };
@@ -106,7 +101,7 @@ export async function logOut() {
   redirect("/");
 }
 
-export async function oAuthSignIn(provider: OAuthProvider) {
+export async function oAuthSignIn(provider) {
   const oAuthClient = getOAuthClient(provider);
   redirect(oAuthClient.createAuthUrl(await cookies()));
 }

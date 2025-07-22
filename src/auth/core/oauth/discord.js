@@ -1,7 +1,17 @@
-import { env } from "../../../data/env/server"
-import { OAuthClient } from "./base"
-import { z } from "zod"
+import { env } from "../../../data/env/server";
+import { OAuthClient } from "./base";
+import { z } from "zod";
 
+const discordUserSchema = z.object({
+  id: z.string(),
+  username: z.string(),
+  global_name: z.string().nullable(),
+  email: z.string().email(),
+});
+
+/**
+ * @returns {OAuthClient}
+ */
 export function createDiscordOAuthClient() {
   return new OAuthClient({
     provider: "discord",
@@ -14,17 +24,12 @@ export function createDiscordOAuthClient() {
       user: "https://discord.com/api/users/@me",
     },
     userInfo: {
-      schema: z.object({
-        id: z.string(),
-        username: z.string(),
-        global_name: z.string().nullable(),
-        email: z.string().email(),
-      }),
-      parser: user => ({
+      schema: discordUserSchema,
+      parser: (user) => ({
         id: user.id,
         name: user.global_name ?? user.username,
         email: user.email,
       }),
     },
-  })
+  });
 }

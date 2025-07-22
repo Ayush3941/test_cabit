@@ -1,7 +1,17 @@
-import { env } from "../../../data/env/server"
-import { OAuthClient } from "./base"
-import { z } from "zod"
+import { env } from "../../../data/env/server";
+import { OAuthClient } from "./base";
+import { z } from "zod";
 
+const githubUserSchema = z.object({
+  id: z.number(),
+  name: z.string().nullable(),
+  login: z.string(),
+  email: z.string().email(),
+});
+
+/**
+ * @returns {OAuthClient}
+ */
 export function createGithubOAuthClient() {
   return new OAuthClient({
     provider: "github",
@@ -14,17 +24,12 @@ export function createGithubOAuthClient() {
       user: "https://api.github.com/user",
     },
     userInfo: {
-      schema: z.object({
-        id: z.number(),
-        name: z.string().nullable(),
-        login: z.string(),
-        email: z.string().email(),
-      }),
-      parser: user => ({
+      schema: githubUserSchema,
+      parser: (user) => ({
         id: user.id.toString(),
         name: user.name ?? user.login,
         email: user.email,
       }),
     },
-  })
+  });
 }

@@ -27,7 +27,7 @@ export async function GET(req,res) {
 
         if (id) {
                 const [record] = await db.select().from(tableInfo.table).where(eq(tableInfo.table[tableInfo.idField],id));  
-                console.log(id,tableInfo.table[tableInfo.idField])
+              
                 return record ? new Response(JSON.stringify({ record })) : new Response(JSON.stringify({ error: "Record not found" }), { status: 404 });
             } else {
                 const records = await db.select().from(tableInfo.table);

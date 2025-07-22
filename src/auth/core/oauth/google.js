@@ -1,7 +1,17 @@
-import { env } from "../../../data/env/server"
-import { OAuthClient } from "./base"
-import { z } from "zod"
+import { env } from "../../../data/env/server";
+import { OAuthClient } from "./base";
+import { z } from "zod";
 
+const googleUserSchema = z.object({
+  sub: z.string(),
+  name: z.string(),
+  email: z.string().email(),
+  picture: z.string().url().optional(),
+});
+
+/**
+ * @returns {OAuthClient}
+ */
 export function createGoogleOAuthClient() {
   return new OAuthClient({
     provider: "google",
@@ -18,12 +28,7 @@ export function createGoogleOAuthClient() {
       user: "https://www.googleapis.com/oauth2/v3/userinfo",
     },
     userInfo: {
-      schema: z.object({
-        sub: z.string(),
-        name: z.string(),
-        email: z.string().email(),
-        picture: z.string().url().optional(),
-      }),
+      schema: googleUserSchema,
       parser: (user) => ({
         id: user.sub,
         name: user.name,
@@ -31,5 +36,5 @@ export function createGoogleOAuthClient() {
         picture: user.picture,
       }),
     },
-  })
+  });
 }

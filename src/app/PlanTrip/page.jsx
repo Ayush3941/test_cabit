@@ -1,22 +1,24 @@
-"use client";
-import { useState } from "react";
-import "./page.css";
-import CarousaL from "../../components/Carousal.jsx";
-import { NavBarHome } from "../../components/Navbar.jsx";
-import Form from "./first.jsx";
-import Options from "./second.jsx";
-import { useSearchParams } from 'next/navigation';
-import Foot from "../../components/Footer.jsx";
+'use client';
 
-export default function PlanTrip() {
+import { useState, Suspense } from 'react';
+import './page.css';
+import CarousaL from '../../components/Carousal.jsx';
+import { NavBarHome } from '../../components/Navbar.jsx';
+import Form from './first.jsx';
+import Options from './second.jsx';
+import { useSearchParams } from 'next/navigation';
+import Foot from '../../components/Footer.jsx';
+
+function PlanTripContent() {
   const [showOptions, setShowOptions] = useState(false);
-  const [tripInfo, setTripInfo] = useState(null); //  store collected info here
+  const [tripInfo, setTripInfo] = useState(null);
   const searchParams = useSearchParams();
   const whereTo = searchParams.get('whereTo') || '';
+
   const handleFormSubmit = (info) => {
-    setTripInfo(info);              //  save the form data
-    setShowOptions(true);           //  show options component
-    console.log("Collected Info:", info); //  see what you get
+    setTripInfo(info);
+    setShowOptions(true);
+    console.log('Collected Info:', info);
   };
 
   return (
@@ -30,7 +32,11 @@ export default function PlanTrip() {
               <div className="col-2"></div>
               <div className="col-8">
                 <div className="row">
-                  {showOptions ? <Options tripInfo={tripInfo} /> : <Form onSubmit={handleFormSubmit} whereTo= {whereTo}/>}
+                  {showOptions ? (
+                    <Options tripInfo={tripInfo} />
+                  ) : (
+                    <Form onSubmit={handleFormSubmit} whereTo={whereTo} />
+                  )}
                 </div>
               </div>
               <div className="col-2"></div>
@@ -38,8 +44,15 @@ export default function PlanTrip() {
           </div>
         </div>
       </div>
-      <Foot/>
+      <Foot />
     </div>
   );
 }
 
+export default function PlanTrip() {
+  return (
+    <Suspense fallback={<div>Loading trip planner...</div>}>
+      <PlanTripContent />
+    </Suspense>
+  );
+}

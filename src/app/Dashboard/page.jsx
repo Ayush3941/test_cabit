@@ -13,7 +13,7 @@ export default function Dashboard() {
   const [sidebarVisible, setSidebarVisible] = useState(true);
 
   return (
-    <div className="dashboard-wrapper">   
+    <div className="dashboard-wrapper">
       <div className="dashboard-container">
         <Sidebar 
           activeSection={activeSection} 
@@ -31,13 +31,15 @@ export default function Dashboard() {
 
         <div className="main-content">
           <div className="header" style={{"textAlign":"center"}}>
+            
             <h1>Trip to Lucknow</h1>
           </div>
-
+          <div className="main-content-body">
           {activeSection === "Overview" && <Overview />}
           {activeSection === "PlacesTovisit" && <PlacesTovisit />}
           {activeSection === "Explore" && <Explore />}
           {activeSection === "Ask AI" && <AiSection />}
+          </div>
         </div>
         <div className="dashboard-map-container">
           <MapBox />
