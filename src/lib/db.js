@@ -1,19 +1,19 @@
-const { z } = require("zod");
-const { env } = require("../data/env/server");
 const { drizzle } = require("drizzle-orm/node-postgres");
-const { Client } = require("pg");
-const schema = require("../drizzle/schema");  // assuming same path
+const { Pool } = require("pg");
+const schema = require("../drizzle/schema");
+const { env } = require("../data/env/server");
 
 let db;
 
 if (!global._db) {
-  const client = new Client({
+  const pool = new Pool({
     connectionString: env.DB_URL,
+    ssl: {
+      rejectUnauthorized: false, // Supabase requires this on Vercel
+    },
   });
 
-  client.connect();
-
-  global._db = drizzle(client, { schema });
+  global._db = drizzle(pool, { schema });
 }
 
 db = global._db;
