@@ -1,85 +1,189 @@
+'use client';
 
+import Link from 'next/link';
+import { useState } from 'react';
 
 export default function Foot() {
-    return (
-        <footer 
-            className="row"
-            style={{
-                backgroundColor: "#1C1F22",
-                padding: "40px 60px",
-                margin: "0",
-                borderRadius: "3px",
-                boxShadow: "0 8px 24px rgba(0,0,0,0.3)",
-                backdropFilter: "blur(12px)",
-                color: "#E0E0E0",
-                fontFamily: "'Poppins', sans-serif",
-            }}
-        >
-            <div className="col-3">
-                <img src= "images/CabitImageW.png" alt="logo??"/>
-                <p style={{ color: "#B0B0B0", fontSize: "14px" }}>© 2024 CabIt. All rights reserved.</p>
-            </div>
+  const [email, setEmail] = useState('');
 
-            <div className="col-2">
-                <h5 style={{ color: "#FFEB66", fontWeight: "600" }}>Company</h5>
-                <ul className="nav flex-column">
-                    <li className="nav-item mb-2"><a href="/" className="nav-link p-0 text-secondary">Home</a></li>
-                    <li className="nav-item mb-2"><a href="/about" className="nav-link p-0 text-secondary">About Us</a></li>
-                    <li className="nav-item mb-2"><a href="/careers" className="nav-link p-0 text-secondary">Careers</a></li>
-                    <li className="nav-item mb-2"><a href="/blog" className="nav-link p-0 text-secondary">Blog</a></li>
-                </ul>
-            </div>
+  const handleSubscribe = (e) => {
+    e.preventDefault();
+    // TODO: wire to your API
+  };
 
-            <div className="col-2">
-                <h5 style={{ color: "#FFEB66", fontWeight: "600" }}>Support</h5>
-                <ul className="nav flex-column">
-                    <li className="nav-item mb-2"><a href="/contact" className="nav-link p-0 text-secondary">Contact Us</a></li>
-                    <li className="nav-item mb-2"><a href="/faqs" className="nav-link p-0 text-secondary">FAQs</a></li>
-                    <li className="nav-item mb-2"><a href="/help" className="nav-link p-0 text-secondary">Help Center</a></li>
-                    <li className="nav-item mb-2"><a href="/safety" className="nav-link p-0 text-secondary">Safety</a></li>
-                </ul>
-            </div>
+  return (
+    <footer className="w-full bg-[#1C1F22]/95 text-[#E0E0E0] shadow-[0_8px_24px_rgba(0,0,0,0.3)] backdrop-blur">
+      <div className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 lg:px-10">
+        {/* GRID */}
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-12">
+          {/* Newsletter — FIRST on mobile for visibility */}
+          <div className="lg:col-span-4 order-1 lg:order-none">
+            <h5 className="text-amber-300 font-semibold">Newsletter</h5>
+            <p className="mt-2 text-xs text-[#B0B0B0]">
+              Stay updated with our latest news & offers.
+            </p>
 
-            <div className="col-2">
-                <h5 style={{ color: "#FFEB66", fontWeight: "600" }}>Legal</h5>
-                <ul className="nav flex-column">
-                    <li className="nav-item mb-2"><a href="/privacy" className="nav-link p-0 text-secondary">Privacy Policy</a></li>
-                    <li className="nav-item mb-2"><a href="/terms" className="nav-link p-0 text-secondary">Terms of Service</a></li>
-                    <li className="nav-item mb-2"><a href="/refund" className="nav-link p-0 text-secondary">Refund Policy</a></li>
-                </ul>
-            </div>
-
-            <div className="col-3">
-                <h5 style={{ color: "#FFEB66", fontWeight: "600" }}>Newsletter</h5>
-                <p style={{ fontSize: "13px", color: "#B0B0B0" }}>Stay updated with our latest news & offers.</p>
+            <form onSubmit={handleSubscribe} className="mt-4">
+              {/* Stacks on xs, inline from sm+ */}
+              <div className="flex flex-col gap-3 sm:flex-row">
+                <label htmlFor="newsletter-email" className="sr-only">
+                  Email address
+                </label>
                 <input
-                    type="email"
-                    placeholder="Your email"
-                    style={{
-                        padding: "10px",
-                        borderRadius: "8px",
-                        border: "1px solid #444",
-                        backgroundColor: "#2A2D31",
-                        color: "#E0E0E0",
-                        width: "100%",
-                        marginBottom: "12px",
-                        fontSize: "14px"
-                    }}
+                  id="newsletter-email"
+                  type="email"
+                  required
+                  inputMode="email"
+                  autoComplete="email"
+                  placeholder="Your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="
+                    w-full rounded-xl border border-[#444]
+                    bg-[#2A2D31] px-3 py-2.5 text-sm text-[#E0E0E0]
+                    placeholder:text-[#9BA1A6]
+                    focus:outline-none focus:ring-2 focus:ring-amber-400
+                    sm:flex-1
+                  "
                 />
-                <button style={{
-                    backgroundColor: "#FFEB66",
-                    color: "#2D3134",
-                    padding: "10px",
-                    borderRadius: "8px",
-                    border: "none",
-                    cursor: "pointer",
-                    width: "100%",
-                    fontWeight: "600"
-                }}>
-                    Subscribe
+                <button
+                  type="submit"
+                  className="
+                    w-full sm:w-auto rounded-xl bg-amber-300 px-4 py-2.5
+                    text-sm font-semibold text-[#2D3134] shadow
+                    hover:bg-amber-400 active:scale-[0.98]
+                    focus:outline-none focus:ring-2 focus:ring-amber-400
+                  "
+                >
+                  Subscribe
                 </button>
-            </div>
+              </div>
 
-        </footer>
-    );
+              {/* tiny helper row fits small screens */}
+              <p className="mt-2 text-[11px] leading-snug text-[#8E9398]">
+                By subscribing, you agree to our{' '}
+                <Link href="/terms" className="no-underline text-amber-300 hover:text-amber-200">
+                  Terms
+                </Link>{' '}
+                &{' '}
+                <Link href="/privacy" className="no-underline text-amber-300 hover:text-amber-200">
+                  Privacy Policy
+                </Link>.
+              </p>
+            </form>
+          </div>
+
+          {/* Brand */}
+          <div className="lg:col-span-3">
+            <div className="flex items-center gap-3">
+              <img src="/images/CabitImageW.png" alt="Cabit" className="h-10 w-auto" />
+            </div>
+            <p className="mt-4 text-xs text-[#B0B0B0]">© 2024 CabIt. All rights reserved.</p>
+          </div>
+
+          {/* Company */}
+          <div className="lg:col-span-2">
+            <h5 className="text-amber-300 font-semibold">Company</h5>
+            <ul className="mt-3 grid grid-cols-2 gap-2 sm:block sm:space-y-2">
+              <li>
+                <Link href="/" className="no-underline text-sm text-[#B0B0B0] hover:text-white transition">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link href="/about" className="no-underline text-sm text-[#B0B0B0] hover:text-white transition">
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link href="/careers" className="no-underline text-sm text-[#B0B0B0] hover:text-white transition">
+                  Careers
+                </Link>
+              </li>
+              <li>
+                <Link href="/blog" className="no-underline text-sm text-[#B0B0B0] hover:text-white transition">
+                  Blog
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Support */}
+          <div className="lg:col-span-2">
+            <h5 className="text-amber-300 font-semibold">Support</h5>
+            <ul className="mt-3 grid grid-cols-2 gap-2 sm:block sm:space-y-2">
+              <li>
+                <Link href="/contact" className="no-underline text-sm text-[#B0B0B0] hover:text-white transition">
+                  Contact Us
+                </Link>
+              </li>
+              <li>
+                <Link href="/faqs" className="no-underline text-sm text-[#B0B0B0] hover:text-white transition">
+                  FAQs
+                </Link>
+              </li>
+              <li>
+                <Link href="/help" className="no-underline text-sm text-[#B0B0B0] hover:text-white transition">
+                  Help Center
+                </Link>
+              </li>
+              <li>
+                <Link href="/safety" className="no-underline text-sm text-[#B0B0B0] hover:text-white transition">
+                  Safety
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Legal */}
+          <div className="lg:col-span-1">
+            <h5 className="text-amber-300 font-semibold">Legal</h5>
+            <ul className="mt-3 space-y-2">
+              <li>
+                <Link href="/privacy" className="no-underline text-sm text-[#B0B0B0] hover:text-white transition">
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link href="/terms" className="no-underline text-sm text-[#B0B0B0] hover:text-white transition">
+                  Terms of Service
+                </Link>
+              </li>
+              <li>
+                <Link href="/refund" className="no-underline text-sm text-[#B0B0B0] hover:text-white transition">
+                  Refund Policy
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Divider + bottom row */}
+        <div className="mt-10 border-t border-white/10 pt-6">
+          <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
+            <p className="text-xs text-[#9BA1A6] text-center sm:text-left">
+              Built with ❤️ for travelers across India.
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-4">
+              <Link href="https://x.com" className="no-underline text-xs text-[#B0B0B0] hover:text-white transition">
+                Twitter
+              </Link>
+              <Link
+                href="https://instagram.com"
+                className="no-underline text-xs text-[#B0B0B0] hover:text-white transition"
+              >
+                Instagram
+              </Link>
+              <Link
+                href="https://linkedin.com"
+                className="no-underline text-xs text-[#B0B0B0] hover:text-white transition"
+              >
+                LinkedIn
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
 }

@@ -1,6 +1,6 @@
 import "./page.css"
 import CarousaL from "../../components/Carousal.jsx"
-import {NavBarNormal} from "../../components/Navbar.jsx"
+import NavBarNormal from "../../components/Navbar.jsx"
 import Form from "./form.jsx"
 import Share from "./share.jsx"
 import Foot from "../../components/Footer.jsx";

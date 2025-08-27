@@ -1,0 +1,96 @@
+/* make the whole bar compact */
+.ai-search.slim {
+  width: min(1100px, 96vw);
+  margin-inline: auto;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 6px;                 /* thinner */
+  box-shadow: 0 4px 14px rgba(0,0,0,.06);
+}
+
+/* single, compact row that wraps gracefully */
+.ai-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1.3fr 0.5fr 1.4fr 0.9fr 0.9fr auto;
+  gap: 8px;                     /* tight gap */
+  align-items: center;
+}
+@media (max-width: 1100px) {
+  .ai-grid {
+    grid-template-columns: 1fr 1fr 0.5fr 1fr 1fr auto;
+  }
+}
+@media (max-width: 800px) {
+  .ai-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* visually hidden labels (keep a11y) */
+.vh {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0);
+  white-space: nowrap; border: 0;
+}
+
+/* fields */
+.ai-field {
+  position: relative;
+}
+.ai-field input,
+.ai-field select {
+  height: 38px;                 /* compact height */
+  padding: 8px 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #f8fafc;
+  color: #0f172a;
+  font-size: 14px;
+  font-weight: 600;
+  width: 100%;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+.ai-field.narrow input { text-align: center; }
+
+.ai-field input::placeholder { color: #94a3b8; font-weight: 600; }
+
+/* focus */
+.ai-field input:focus,
+.ai-field select:focus {
+  outline: none;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99,102,241,.18);
+}
+
+/* actions */
+.ai-actions {
+  display: grid;
+  align-items: center;
+}
+.ai-actions button {
+  height: 38px;                 /* matches inputs */
+  border: none;
+  border-radius: 10px;
+  padding: 0 14px;
+  background: #111827;
+  color: #fff;
+  font-weight: 800;
+  letter-spacing: .02em;
+  cursor: pointer;
+  transition: transform .1s ease, box-shadow .15s ease, background .15s ease;
+  white-space: nowrap;
+}
+.ai-actions button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(0,0,0,.12);
+  background: #0b1220;
+}
+.ai-actions button:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}

@@ -1,6 +1,6 @@
 import "./page.css"
 
-import {NavBarNormal} from "../../components/Navbar.jsx"
+import NavBarNormal from "../../components/Navbar.jsx"
 
 import VoiceConverter from "./convertor.jsx"
 

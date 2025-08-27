@@ -1,6 +1,6 @@
 import "./page.css"
 import CarousaL from "../../../components/Carousal.jsx"
-import {NavBarNormal} from "../../../components/Navbar.jsx"
+import NavBarNormal from "../../../components/Navbar.jsx"
 
 import {OtpCard} from "../../../components/GeneralCards.jsx";
 

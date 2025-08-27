@@ -1,227 +1,381 @@
-import "./page.css";
+"use client";
 
-//elements
-import CarousaL from "../components/Carousal.jsx";
-import {ImageCards} from "../components/GeneralCards.jsx";
-import TouristAttractions from "./VisitingPlaces/page";
+import { useState } from "react";
 import Link from "next/link";
-import ImageBox from "../components/ImageBox";
-import {NavBarHome} from "../components/Navbar.jsx"
-import SearchBar from "../components/SearchBar.jsx"
-import Foot from "../components/Footer.jsx";
-import SearchForm from "./searchBox.jsx";
+import Image from "next/image";
+import { HiMiniBars3 } from "react-icons/hi2";
+import { FiChevronDown, FiSearch } from "react-icons/fi";
+import { FaGooglePlay, FaApple } from "react-icons/fa";
+import { FiFacebook, FiTwitter, FiInstagram } from "react-icons/fi";
+import Foot from './../components/Footer.jsx';
+import { SiGoogleplay, SiAppstore } from "react-icons/si";
+
+/**
+ * Cabit Home — Tailwind implementation matching the provided Figma
+ * - Clean, precise spacings
+ * - Responsive
+ * - No external CSS required beyond Tailwind
+ * - Swap image src paths with your real assets
+ */
+export default function CabitHome() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="min-h-screen bg-white text-black antialiased">
+      {/* NAVBAR */}
+      <header className="sticky top-0 z-50 bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8">
+  <div className="flex h-20 items-center">
+    {/* Left: Logo */}
+    <Link href="/" className="flex items-center gap-2 select-none">
+      <Image
+        src="/images/CabitImageW.png"
+        alt="Cabit"
+        width={110}
+        height={28}
+        className="h-auto w-[110px]"
+      />
+    </Link>
+
+    {/* Right: ALL links aligned right (desktop) */}
+    <div className="ms-auto hidden items-center gap-8 md:flex">
+      <nav className="flex items-center gap-8">
+        <Link href="/VisitingPlaces" className="text-black hover:text-neutral-700 transition-colors">
+          Discover
+        </Link>
+        <Link href="/AboutUs" className="text-black hover:text-neutral-700 transition-colors">
+          About
+        </Link>
+        <Link href="/ContactUs" className="text-black hover:text-neutral-700 transition-colors">
+          Contact
+        </Link>
+      </nav>
+
+      <Link
+        href="/Login"
+        className="text-black font-semibold hover:text-neutral-700 transition-colors"
+      >
+        Sign in
+      </Link>
+    </div>
+
+    {/* Burger (mobile) */}
+    <button
+      className="md:hidden ms-auto inline-flex h-10 w-10 items-center justify-center rounded-lg border border-neutral-200 text-neutral-900"
+      aria-label="Toggle menu"
+      onClick={() => setOpen((s) => !s)}
+    >
+      <HiMiniBars3 size={22} />
+    </button>
+  </div>
+</div>
 
 
-export default function Home() {
-	const handleSearch = (data) => {
-    console.log("Search data:", data);
-  };
+        {/* Mobile menu */}
+        {open && (
+          <div className="md:hidden border-t border-neutral-200">
+            <div className="mx-auto max-w-[1200px] px-4 py-4 space-y-3 text-[15px]">
+              <Link href="/VisitingPlaces" className="block py-1">Discover</Link>
+              <Link href="/AboutUs" className="block py-1">About</Link>
+              <Link href="/ContactUs" className="block py-1">Contact</Link>
+              <Link href="/Login" className="block pt-2 font-semibold text-[#F4B000]">Sign in</Link>
+            </div>
+          </div>
+        )}
+      </header>
 
-	return (
-		<div className="container-m">
-            <NavBarHome/>
+      {/* HERO */}
+      <section className="relative overflow-hidden">
+        <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 gap-10 py-16 sm:py-20 lg:grid-cols-2 lg:gap-8 lg:py-24">
+            <div className="max-w-xl">
+              <h1 className="text-4xl font-extrabold leading-tight sm:text-5xl">Travelling just got smarter.</h1>
+              <p className="mt-4 text-[15px] leading-relaxed text-neutral-600">
+                Discover curated travel rides to top destinations — planned ahead, safe for women, and
+                made for explorers like you.
+              </p>
 
-            {/* Main Content */}
-            <div className="Content">
-				<div>
-					<CarousaL />
-					<div className="search-form-div">
-                    	<SearchForm />
-                	</div>
-					<div className="Home_Page_Background">
+              <div className="mt-6">
+                <Link
+                  href="/PlanTrip"
+                  className="inline-flex items-center gap-2 rounded-full bg-[#FFE966] px-5 py-2.5 text-[15px] font-semibold text-black shadow-sm hover:scale-[1.02] transition-transform"
+                >
+                  Plan now!
+                </Link>
+              </div>
 
-					    <div className="Home_Page_Content">
-							<div className="row">
-								<h1>What We Offer</h1>
-							</div>
-							<br />
-							<div className="row">
-								<div className="Flex_Row">
-									<Link href="/DestinationPage" style={{ textDecoration: 'none' }}> <ImageCards width="50vh" height="70vh" heading = "Tour Planner" text = "Customize your trip with a personalized itinerary." source = "/images/homepage/col1.jpeg"/></Link>
-									<Link href="/CabBooking" style={{ textDecoration: 'none' }}> <ImageCards width="50vh" height="70vh" heading = "Cab Booking"  text = "Book cabs with drivers who understand your language for a smooth journey." source = "/images/homepage/col2.jpeg"/></Link>
-									<Link href="/VisitingPlaces" style={{ textDecoration: 'none' }}> <ImageCards width="50vh" height="70vh" heading = "Best Destinations "  text = "Discover top travel spots in India, handpicked for every type of traveler." source = "/images/homepage/col3.jpeg"/></Link>
-									<Link href="/TranslatorPage" style={{ textDecoration: 'none' }}><ImageCards width="50vh" height="70vh" heading = "No Lang-Barriers"  text = "Overcome language challenges with in-app translation tools." source = "/images/homepage/col4.jpeg"/></Link>
-								</div>
-							</div>
-							<br />
-							<br />
-							<br />
-							<br />
+              {/* Search bar */}
+              <div className="mt-8 flex w-full max-w-xl items-stretch gap-3">
+                <button className="flex-1 rounded-xl border border-neutral-200 bg-white px-4 py-3 text-left text-[14px] shadow-sm">
+                  <div className="flex items-center justify-between font-medium text-neutral-800">
+                    <span>LOCATION</span>
+                    <FiChevronDown className="opacity-60" />
+                  </div>
+                  <div className="mt-1 text-neutral-500">Delhi</div>
+                </button>
+                <button className="flex-1 rounded-xl border border-neutral-200 bg-white px-4 py-3 text-left text-[14px] shadow-sm">
+                  <div className="flex items-center justify-between font-medium text-neutral-800">
+                    <span>DATE</span>
+                    <FiChevronDown className="opacity-60" />
+                  </div>
+                  <div className="mt-1 text-neutral-500">14.07.26</div>
+                </button>
+                <button className="grid place-items-center rounded-xl bg-[#FFE966] px-5 shadow-sm hover:scale-105 transition">
+                  <FiSearch size={20} />
+                </button>
+              </div>
+            </div>
 
-							<div className="row">
-								<div className="col-1"></div>
-								<div className="col-5" style={{ textAlign: "left" }}>
-									<h1>In 3 Easy Steps</h1>
-									<br />
+            {/* Illustration */}
+            <div className="relative">
+              <div className="relative mx-auto aspect-[16/9] w-full max-w-[560px] lg:ml-auto">
+                {/* Replace with your hero SVG/PNG */}
+                <Image
+                  src="/images/hero-car.png"
+                  alt="Hero Illustration"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
 
-									<div className="Flex_Row">
-										<div className="col-1"><img src = "/images/homepage/point1.jpeg" style = {{width:"100%" , borderRadius:"100px"}}/></div>
-										<div className="col-10">
-											<h3>Choose Destination</h3>
-											<p>Select your desired travel destination and customize your itinerary.</p>
-										</div>
-									</div>
-									<br />
+        {/* Decorative background shapes (optional) */}
+        <div className="pointer-events-none absolute inset-0 -z-10 opacity-[0.06]">
+          <Image src="/images/bg-shapes.png" alt="" fill className="object-cover" />
+        </div>
+      </section>
 
-									<div className="Flex_Row">
-										<div className="col-1"><img src = "/images/homepage/point2.jpeg" style = {{width:"100%", borderRadius:"100px"}}/></div>
-										<div className="col-10">
-											<h3>Make Payment</h3>
-											<p>Securely complete your payment for the trip and cab services.</p>
-										</div>
-									</div>
+      {/* WHAT WE OFFER */}
+      
+      {/* QUICK ACTION CARDS (clickable routes) */}
+      <section className="py-8 sm:py-10">
+        <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-5 [grid-template-columns:repeat(auto-fit,minmax(260px,1fr))]">
 
-									<div className="Flex_Row">
-										<div className="col-1"><img src = "/images/homepage/point3.jpeg" style = {{width:"100%", borderRadius:"100px"}}/></div>
-										<div className="col-10">
-											<h3>Reach Airport on selected day</h3>
-											<p>Arrive at the airport on your selected date and start your journey!</p>
-										</div>
-									</div>
-								</div>
-								<div className="col-5">
-										{/*An introductory video...*/}
-									<ImageBox source = "/images/homepage/couples.jpeg"/>
-								</div>
-								<div className="col-1"></div>
+            {[
+              
+              {
+                title: "Cab Booking",
+                desc: "Book rides with trusted drivers who speak your language.",
+                icon: "/images/icon-taxi.png",
+                href: "/CabBooking",
+              },
+              {
+                title: "Destinations",
+                desc: "Discover handpicked travel gems across India.",
+                icon: "/images/icon-discover.png",
+                href: "/VisitingPlaces",
+              },
+              {
+                title: "No Language Gaps",
+                desc: "Travel smooth with in-app translation.",
+                icon: "/images/icon-language.png",
+                href: "/TranslatorPage",
+              },
+            ].map((c) => (
+              <Link
+                key={c.title}
+                href={c.href}
+                className="group block no-underline focus-visible:outline-none"
+              >
+                <article
+                  className="relative z-0 overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm transition
+                             hover:-translate-y-0.5 hover:shadow-lg
+                             group-focus-visible:ring-2 group-focus-visible:ring-[#FFE966] group-focus-visible:ring-offset-2 group-focus-visible:ring-offset-white"
+                >
+                  {/* Top image — full width with hover zoom */}
+                  <div className="relative aspect-[16/10] w-full overflow-hidden">
+                    <Image
+                      src={c.icon}
+                      alt={c.title}
+                      fill
+                      className="object-cover transition-transform duration-300 group-hover:scale-[1.04]"
+                      sizes="(min-width:1024px) 25vw, (min-width:640px) 50vw, 100vw"
+                    />
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                  </div>
 
-							</div>
-							<br />
-							<br />
-							<br />
-							<br />
-							{/*1> How we help your travel
-							   2> Ready Made Trip plans
-							   3> Safe ans secure travel (women Safety)*/}
+                  {/* Text area */}
+                  <div className="p-5 md:p-6">
+                    <h3 className="flex items-center justify-between text-lg font-semibold text-neutral-900">
+                      {c.title}
+                      <span className="ml-3 inline-flex items-center text-[13px] font-medium text-neutral-500 transition group-hover:text-neutral-900">
+                        Explore
+                        <svg
+                          className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-0.5"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                          aria-hidden="true"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M10.293 3.293a1 1 0 011.414 0l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414-1.414L13.586 10H4a1 1 0 110-2h9.586l-3.293-3.293a1 1 0 010-1.414z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                      </span>
+                    </h3>
+                    <p className="mt-1 text-[14px] leading-relaxed text-neutral-600">{c.desc}</p>
+                  </div>
+                </article>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
 
-							<div className = "row">
-								<div className="col-1"></div>
-								<div className="col-5">
-										{/*An introductory video...*/}
-									<ImageBox source = "/images/homepage/translator.jpeg"/>
-								</div>
-								<div className = "col-5" style={{ textAlign: "left" }}>
+      {/* PLAN, BOOK, RIDE */}
+      <section id="plan" className="py-6 sm:py-10">
+        <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8">
+          <h2 className="text-center text-3xl font-extrabold">Plan, Book, Ride – In minutes</h2>
+          <p className="mt-2 text-center text-[14px] text-neutral-600">In just 3 easy steps!</p>
 
-										<div className = "Flex_Row">
-											<h1> How we Make your travel better</h1>
-											<br/>
-										</div>
+          <div className="mt-10 grid grid-cols-1 gap-8 lg:grid-cols-3">
+            {[
+              {
+                num: "01",
+                title: "Pick a Destination",
+                desc: "Choose your travel location.",
+                icon: "/images/step-pin.png",
+              },
+              {
+                num: "02",
+                title: "Select Rides & Dates",
+                desc: "Get matched with routes and drivers.",
+                icon: "/images/step-calendar.png",
+              },
+              {
+                num: "03",
+                title: "Travel Safely",
+                desc: "Enjoy the journey with real-time support.",
+                icon: "/images/step-shield.png",
+              },
+            ].map((s, i) => (
+              <div key={s.num} className="relative">
+                <div className="flex items-start gap-4">
+                  <div className="grid h-14 w-14 place-items-center rounded-full border-2 border-[#FFD35A] text-[#F4B000]">
+                    <span className="text-xl font-bold">{s.num}</span>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold">{s.title}</h3>
+                    <p className="mt-1 text-[14px] text-neutral-600">{s.desc}</p>
+                  </div>
+                </div>
+                {/* dotted connector on larger screens */}
+                {i < 2 && (
+                  <div className="pointer-events-none absolute left-16 right-[-16px] top-7 hidden h-px border-t-2 border-dashed border-neutral-300 lg:block" />
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-									<div className="Flex_Row">
-										<div className="col-1"><img src = "/images/homepage/point4.jpeg" style = {{width:"100%", borderRadius:"100px"}}/></div>
-										<div className="col-10">
-											<h3>Plan ahead Plan better</h3>
-											<p>Effortlessly plan your trip with customized itineraries, seamless ride integration, and real-time updates for a stress-free journey.</p>
-										</div>
-									</div>
+      {/* DESTINATIONS */}
+      <section id="discover" className="py-8 sm:py-12">
+        <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8">
+          <h2 className="text-center text-3xl font-extrabold">Discover  Top Destinations</h2>
+          <p className="mt-2 text-center text-[14px] text-neutral-600">
+            Just select with hassle free planning and get ready to Explore.
+          </p>
+
+          <div className="mt-10 overflow-hidden rounded-2xl">
+            <div className="relative aspect-[16/7] w-full">
+              <Image src="/images/rajasthan-hero.png" alt="Rajasthan" fill className="object-cover" />
+
+              {/* top-right rating */}
+              <div className="absolute right-3 top-3 select-none rounded-full bg-white/90 px-2 py-1 text-[12px] font-semibold shadow">4.4</div>
+
+              {/* bottom-left thumbnails + Show more pill */}
+              <div className="absolute bottom-3 left-3 flex items-end gap-3">
+                <div className="grid grid-cols-3 gap-2 rounded-xl bg-white/90 p-2 backdrop-blur">
+                  {["/images/thumb1.jpg", "/images/thumb2.jpg", "/images/thumb3.jpg"].map((t, i) => (
+                    <div key={i} className="relative h-16 w-20 overflow-hidden rounded-lg">
+                      <Image src={t} alt="thumb" fill className="object-cover" />
+                    </div>
+                  ))}
+                </div>
+                <button className="select-none rounded-full bg-white/90 px-3 py-1 text-[12px] font-semibold shadow hover:bg-white">
+                  Show more
+                </button>
+              </div>
+
+              {/* title & subtitle */}
+              <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-t from-black/30 via-black/0 to-black/0" />
+              <div className="absolute left-6 top-6 max-w-xl text-white">
+                <h3 className="text-[18px] font-semibold">Why Rajasthan?</h3>
+                <p className="mt-1 text-[13px] text-white/90">
+                  An introductory line about the place. Lorem ipsum deje isdbo.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* DOWNLOAD APP */}
+      <section className="py-12 sm:py-16">
+        <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2">
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+          {/* Google Play badge */}
+          {/* Google Play badge */}
+<a
+  href="#"
+  aria-label="Get it on Google Play"
+  className="inline-flex h-[56px] w-[196px] items-center gap-3 rounded-[12px] border border-white/12
+             bg-black px-4 text-white shadow-sm transition
+             hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#FFE966]
+             no-underline hover:no-underline focus:no-underline"
+>
+  <SiGoogleplay className="h-7 w-7" />
+  <span className="leading-tight">
+    <span className="block text-[10px] uppercase tracking-[0.18em] opacity-70 font-light text-white">
+      GET IT ON
+    </span>
+    <span className="block -mt-[2px] text-[17px] font-light text-white">
+      Google Play
+    </span>
+  </span>
+</a>
+
+{/* App Store badge */}
+<a
+  href="#"
+  aria-label="Download on the App Store"
+  className="inline-flex h-[56px] w-[210px] items-center gap-3 rounded-[12px] border border-white/12
+             bg-black px-4 text-white shadow-sm transition
+             hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#FFE966]
+             no-underline hover:no-underline focus:no-underline"
+>
+  <FaApple className="h-7 w-7" />
+  <span className="leading-tight">
+    <span className="block text-[10px] uppercase tracking-[0.12em] opacity-70 font-light text-white">
+      Download on the
+    </span>
+    <span className="block -mt-[2px] text-[17px] font-light text-white/90">
+      App Store
+    </span>
+  </span>
+</a>
+
+        </div>
 
 
-									<div className="Flex_Row">
-										<div className="col-1"><img src = "/images/homepage/point5.jpeg" style = {{width:"100%", borderRadius:"100px"}}/></div>
-										<div className="col-10">
-											<h3>Multilingual Support</h3>
-											<p>Plan your trip effortlessly with our multilingual drivers and built-in translator, ensuring clear communication and a seamless journey.</p>
-										</div>
-									</div>
 
-									<div className="Flex_Row">
-										<div className="col-1"><img src = "/images/homepage/point6.jpeg" style = {{width:"100%", borderRadius:"100px"}}/></div>
-										<div className="col-10">
-											<h3>Affordable Prices/Cashless Payments</h3>
-											<p>Enjoy affordable pricing with no hidden charges and seamless cashless payments for a hassle-free travel experience</p>
-										</div>
-									</div>
-									</div>
-								</div>
-								<div className="col-1"></div>
-							</div>
-							<br />
-							<br />
-							<br />
-							<br />
-							<div className="row">
-								<div className="col-1"></div>
-								<div className="col-5" style={{ textAlign: "left" }}>
-									<h1 style={{ fontSize: "2.5rem" }}>Safety & Easy Travel</h1>
-									<br />
+            <div className="relative mx-auto w-full max-w-[500px]">
+              <div className="relative aspect-[9/16] w-full overflow-hidden rounded-[40px] border border-neutral-200 shadow-xl">
+                <Image src="/images/phone-mock.png" alt="Cabit App" fill />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-									<div className="Flex_Row">
-										<div className="col-1"><img src = "/images/homepage/point7.jpeg" style = {{width:"100%", borderRadius:"100px"}}/></div>
-										<div className="col-10">
-											<h3>Verified & Trained Drivers</h3>
-											<p>SAll drivers undergo background checks and professional training to ensure a safe and reliable travel experience for everyone.</p>
-										</div>
-									</div>
-									<br />
-
-									<div className="Flex_Row">
-										<div className="col-1"><img src = "/images/homepage/point8.jpeg" style = {{width:"100%", borderRadius:"100px"}}/></div>
-										<div className="col-10">
-											<h3>Live Tracking & 24/7 Assistance</h3>
-											<p>Real-time GPS tracking and a dedicated support team provide constant monitoring and immediate help whenever needed</p>
-										</div>
-									</div>
-
-									<div className="Flex_Row">
-										<div className="col-1"><img src = "/images/homepage/point9.jpeg" style = {{width:"100%", borderRadius:"100px"}}/></div>
-										<div className="col-10">
-											<h3>Secure & Comfortable Rides for All</h3>
-											<p>Features like ride detail sharing, emergency alerts, and a safe travel environment ensure a worry-free journey for every passenger.</p>
-										</div>
-									</div>
-								</div>
-								<div className="col-5">
-										{/*An introductory video...*/}
-									<ImageBox source = "/images/homepage/goodman.jpeg"/>
-								</div>
-								<div className="col-1"></div>
-
-							</div>
-							<br />
-							<br />
-						
-					
-							<div className ="row">
-								<h1>Top Destinations</h1>
-								<img src ="/images/temp.png"/>
-							</div>
-				
-							<br />
-							<br />
-							<br />
-							<br />
-
-							<div className="row">
-							  <div className="col-12 text-center my-4">
-							    <h2 className="fw-bold">Download Now</h2>
-							    <div className="border-bottom mx-auto" style={{ width: "100px" }}></div>
-							  </div>
-							  <div className="col-4"></div>
-							  <div className="col-4">
-								  <div className="d-flex justify-content-center" style={{ gap: "20px" }}>
-
-								    <div className="text-center">
-								      <ImageBox width="40vh" height="40vh" source= "/images/homepage/1.png" />
-								      <p className="mt-2 fw-semibold">Cabit User: Bike-Taxi, Auto & Cabs</p>
-								    </div>
-								    <div className="text-center">
-								      <ImageBox width="40vh" height="40vh"source= "/images/homepage/2.png" />
-								      <p className="mt-2 fw-semibold">Cabit Driver: Drive & Earn</p>
-								    </div>
-
-								  </div>
-							  </div>
-							  <div className="col-4"></div>
-							</div>
-							
-
-
-                          {/*<TouristAttractions/>*/}
-						</div> 
-					</div>
-				</div>
-				<Foot/>
-			</div>
-
-	);
+      {/* FOOTER */}
+      <Foot/>
+    </div>
+  );
 }

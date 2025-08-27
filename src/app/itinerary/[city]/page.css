@@ -1,0 +1,315 @@
+/* =========================================
+   HERO / BACKGROUND
+   ========================================= */
+.Home_Page_Background {
+  position: relative;
+  margin-top: 244px;            /* remove for non-intro pages if needed */
+  background-image: url('/images/Background.png');
+  background-size: cover;
+  background-position: top;
+  background-repeat: no-repeat;
+  min-height: 1000px;
+  padding-top: 80px;
+  overflow: clip;
+}
+
+/* =========================================
+   TYPOGRAPHY (GRIT, but tasteful)
+   ========================================= */
+:root {
+  --radius: 14px;
+  --ring: 0 0 0 3px;
+}
+
+.Home_Page_Content { position: relative; }
+
+.Home_Page_Content h1,
+.Home_Page_Content h2,
+.Home_Page_Content h3 {
+  color: hsl(var(--foreground));
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin: .35em 0 .25em;
+  /* “grit”: subtle shadow for readability on photos */
+  text-shadow: 0 1px 1px rgba(0,0,0,.22);
+}
+.Home_Page_Content h1 { font-size: clamp(2.2rem, 3.2vw + 1rem, 3.4rem); }
+.Home_Page_Content h2 { font-size: clamp(1.7rem, 2.2vw + 1rem, 2.4rem); }
+.Home_Page_Content h3 { font-size: clamp(1.25rem, 1.2vw + .8rem, 1.6rem); }
+
+.Home_Page_Content p {
+  color: hsl(var(--foreground));
+  opacity: .92;
+  line-height: 1.65;
+  font-size: 1.02rem;
+  margin: .35em 0;
+  text-shadow: 0 1px 1px rgba(0,0,0,.15);
+}
+
+/* micro-emphasis for inline callouts */
+.em {
+  font-weight: 700;
+  letter-spacing: -.01em;
+}
+
+/* =========================================
+   LAYOUT HELPERS
+   ========================================= */
+.Flex_Row{
+  display: flex;
+  justify-content: space-around;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+/* centered search panel – NO glass / NO big overlay block */
+.search-form-div {
+  position: absolute;
+  top: 300px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  width: min(980px, 92vw);
+  padding: 0; /* let inner form own spacing */
+}
+
+/* keep inputs clean and tactile */
+.search-form-div input,
+.search-form-div select,
+.search-form-div button {
+  border-radius: 12px;
+  border: 1px solid hsl(var(--border));
+  padding: 12px 14px;
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-weight: 600;
+  transition: border-color .15s ease, box-shadow .15s ease, transform .08s ease;
+}
+.search-form-div input:focus,
+.search-form-div select:focus {
+  outline: none;
+  border-color: hsl(var(--primary));
+  box-shadow: var(--ring) color-mix(in oklab, hsl(var(--primary)) 36%, transparent);
+}
+.search-form-div button {
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  cursor: pointer;
+  border-color: transparent;
+}
+.search-form-div button:hover {
+  transform: translateY(-1px);
+}
+.search-form-div button:active {
+  transform: translateY(0);
+}
+
+/* =========================================
+   ITINERARY HEADER / STATUS
+   ========================================= */
+.itin-header {
+  text-align: center;
+  margin: 14px auto 0;
+  padding: 0 12px;
+}
+.itin-header h2 {
+  margin: 0;
+  font-weight: 900;
+  letter-spacing: -0.015em;
+}
+.itin-header .muted {
+  color: hsl(var(--muted-foreground));
+  opacity: .85;
+  font-weight: 600;
+}
+
+/* status rows */
+.ai-itin-skeleton,
+.ai-itin-error {
+  max-width: 1200px;
+  margin: 14px auto 0;
+  padding: 12px 14px;
+  border-radius: 12px;
+  font-weight: 700;
+  text-align: center;
+}
+.ai-itin-skeleton {
+  background: hsl(var(--card));
+  border: 1px dashed hsl(var(--border));
+}
+.ai-itin-error {
+  border: 1px solid hsl(var(--destructive));
+  background: color-mix(in oklab, hsl(var(--destructive)) 12%, hsl(var(--card)));
+  color: hsl(var(--destructive-foreground, var(--foreground)));
+}
+
+/* =========================================
+   MAIN TWO-COLUMN LAYOUT
+   ========================================= */
+.itin-layout {
+  max-width: 1200px;
+  margin: 18px auto 26px;
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 16px;
+  padding-inline: 12px;
+}
+@media (max-width: 1100px) { .itin-layout { grid-template-columns: 1fr; } }
+
+/* left column with light stickiness (no weird overlay) */
+.itin-aside {
+ position: static; 
+  top: 96px;
+  align-self: start;
+  display: grid;
+  gap: 12px;
+}
+
+/* cards – minimal, crisp */
+.card {
+  background: hsl(var(--card));
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius);
+  padding: 14px;
+  box-shadow: 0 6px 18px rgba(0,0,0,.06);
+  transition: border-color .15s ease, transform .12s ease, box-shadow .12s ease;
+}
+.card:hover {
+  transform: translateY(-1px);
+  border-color: color-mix(in oklab, hsl(var(--primary)) 20%, hsl(var(--border)));
+  box-shadow: 0 12px 28px rgba(0,0,0,.08);
+}
+
+.tight { margin: 0 0 6px; }
+.muted { color: hsl(var(--muted-foreground)); opacity: .8; }
+
+/* chips (cities) */
+.chip-row {
+  display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px;
+}
+.chip {
+  background: hsl(var(--muted));
+  color: hsl(var(--foreground));
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  border: 1px solid hsl(var(--border));
+  font-weight: 700;
+  letter-spacing: .01em;
+}
+
+/* costs */
+.kv { list-style: none; margin: 8px 0 0; padding: 0; }
+.kv li {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 8px;
+  padding: 8px 0;
+  border-bottom: 1px dashed hsl(var(--border));
+}
+.kv li:last-child { border-bottom: 0; }
+.kv span { color: hsl(var(--muted-foreground)); }
+.kv b { color: hsl(var(--foreground)); }
+
+/* packing */
+.bullets { margin: 8px 0 0 18px; padding: 0; }
+.bullets li { margin: 6px 0; }
+
+/* =========================================
+   DAY-BY-DAY TIMELINE
+   ========================================= */
+.itin-days { display: grid; gap: 14px; }
+
+/* day card – solid (no glass), clean accent bar */
+.day-card {
+  position: relative;
+  background: hsl(var(--card));
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius);
+  padding: 14px;
+  box-shadow: 0 6px 18px rgba(0,0,0,.06);
+  transition: border-color .15s ease, box-shadow .12s ease, transform .12s ease;
+}
+.day-card::before {
+  content: "";
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: hsl(var(--primary));
+  border-top-left-radius: var(--radius);
+  border-bottom-left-radius: var(--radius);
+}
+.day-card:hover {
+  transform: translateY(-1px);
+  border-color: color-mix(in oklab, hsl(var(--primary)) 20%, hsl(var(--border)));
+  box-shadow: 0 12px 28px rgba(0,0,0,.08);
+}
+
+/* hero row (image + meta) */
+.day-hero {
+  display: grid;
+  grid-template-columns: 190px 1fr;
+  gap: 12px;
+  align-items: center;
+}
+@media (max-width: 640px) { .day-hero { grid-template-columns: 1fr; } }
+
+.day-hero-img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid hsl(var(--border));
+}
+
+.day-hero-info .badge {
+  display: inline-block;
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .02em;
+  margin-bottom: 6px;
+}
+.day-hero-info h3.tight { margin: 0; }
+.lodging { margin: 6px 0 0; color: hsl(var(--muted-foreground)); }
+
+/* sections */
+.section { border-top: 1px solid hsl(var(--border)); padding-top: 10px; margin-top: 12px; }
+.section-head { display: flex; gap: 10px; align-items: baseline; margin-bottom: 6px; }
+
+/* time-of-day tag */
+.pill {
+  background: hsl(var(--muted));
+  color: hsl(var(--foreground));
+  border: 1px solid hsl(var(--border));
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 11px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+/* activities */
+.acts { margin: 0 0 0 18px; padding: 0; }
+.acts li { margin: 8px 0; }
+.acts b { font-weight: 800; letter-spacing: -.01em; }
+.acts .desc { margin-top: 2px; color: hsl(var(--muted-foreground)); line-height: 1.5; }
+
+/* =========================================
+   ACCESSIBILITY / POLISH
+   ========================================= */
+@media (prefers-reduced-motion: reduce) {
+  .card, .day-card, .search-form-div button { transition: none; }
+}
+
+/* thin, unobtrusive scrollbars */
+@media (hover: hover) and (pointer: fine) {
+  * { scrollbar-width: thin; scrollbar-color: hsl(var(--muted)) transparent; }
+  *::-webkit-scrollbar { height: 10px; width: 10px; }
+  *::-webkit-scrollbar-thumb {
+    background: hsl(var(--muted)); border-radius: 999px; border: 2px solid transparent; background-clip: padding-box;
+  }
+  *::-webkit-scrollbar-track { background: transparent; }
+}

@@ -3,7 +3,7 @@
 import { useState, Suspense } from 'react';
 import './page.css';
 import CarousaL from '../../components/Carousal.jsx';
-import { NavBarHome } from '../../components/Navbar.jsx';
+import  NavBarHome  from '../../components/Navbar.jsx';
 import Form from './first.jsx';
 import Options from './second.jsx';
 import { useSearchParams } from 'next/navigation';
