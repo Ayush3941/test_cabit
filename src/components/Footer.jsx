@@ -17,7 +17,7 @@ export default function Foot() {
         {/* GRID */}
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-12">
           {/* Newsletter — FIRST on mobile for visibility */}
-          <div className="lg:col-span-4 order-1 lg:order-none">
+          <div className="lg:col-span-3 order-1 lg:order-none">
             <h5 className="text-amber-300 font-semibold">Newsletter</h5>
             <p className="mt-2 text-xs text-[#B0B0B0]">
               Stay updated with our latest news & offers.
@@ -76,7 +76,7 @@ export default function Foot() {
           {/* Brand */}
           <div className="lg:col-span-3">
             <div className="flex items-center gap-3">
-              <img src="/images/CabitImageW.png" alt="Cabit" className="h-10 w-auto" />
+              <img src="/images/logo2.png" alt="Cabit" className="h-20 relative drop-shadow-[1px_1px_0px_rgba(255,255,255,1)] w-auto" />
             </div>
             <p className="mt-4 text-xs text-[#B0B0B0]">© 2024 CabIt. All rights reserved.</p>
           </div>
@@ -111,7 +111,7 @@ export default function Foot() {
           {/* Support */}
           <div className="lg:col-span-2">
             <h5 className="text-amber-300 font-semibold">Support</h5>
-            <ul className="mt-3 grid grid-cols-2 gap-2 sm:block sm:space-y-2">
+            <ul className="mt-3 grid grid-cols-2 gap-2 -ml-7 sm:block sm:space-y-2">
               <li>
                 <Link href="/contact" className="no-underline text-sm text-[#B0B0B0] hover:text-white transition">
                   Contact Us
@@ -136,9 +136,9 @@ export default function Foot() {
           </div>
 
           {/* Legal */}
-          <div className="lg:col-span-1">
+          <div className="lg:col-span-2">
             <h5 className="text-amber-300 font-semibold">Legal</h5>
-            <ul className="mt-3 space-y-2">
+            <ul className="mt-3 -ml-10 space-y-2">
               <li>
                 <Link href="/privacy" className="no-underline text-sm text-[#B0B0B0] hover:text-white transition">
                   Privacy Policy

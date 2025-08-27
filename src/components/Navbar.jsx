@@ -155,7 +155,8 @@ function UserMenu({ onLogout }) {
       <div className="flex flex-col">
         <Link
           href="/Dashboard"
-          className="no-underline px-3 py-2 text-sm font-medium text-white/90 hover:text-amber-300 rounded-lg"
+          className="px-3 py-2 text-sm font-medium text-white/90 hover:text-amber-300 rounded-lg"
+          style={{ textDecoration: 'none' }}
         >
           Dashboard
         </Link>
