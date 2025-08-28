@@ -17,6 +17,14 @@ const poppins = Poppins({
   subsets: ['latin'],
 });
 
+export const metadata = {
+  title: "Cabit",
+  description: "Best travel planner",
+  icons: {
+    icon: "/images/favicon.ico", // 👈 put favicon inside public folder
+  },
+};
+
 export default function Layout({ children }) {
   return (
     <html lang="en">
