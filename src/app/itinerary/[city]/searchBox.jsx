@@ -59,9 +59,9 @@ export default function SearchForm() {
     <form
       onSubmit={onSubmit}
       className="
-        mx-auto w-full max-w-[1100px]
+        mx-auto w-full max-w-[1200px]
         rounded-2xl border border-gray-200/80 bg-white/90
-        p-2 sm:p-2 md:p-2
+        p-10 sm:p-2 md:p-2
         shadow-[0_10px_30px_rgba(0,0,0,0.08)] backdrop-blur
       "
     >
@@ -126,9 +126,9 @@ export default function SearchForm() {
             value={days}
             onChange={(e) => setDays(e.target.value)}
             className="
-              h-11 sm:h-10 w-full min-w-0
+              h-11 sm:h-10 min-w-0 w-full
               rounded-xl border border-gray-200 bg-slate-50
-              pl-9 pr-3 text-center text-[14px] font-semibold text-slate-900
+              pl-7 pr-1 text-center text-[14px] font-semibold text-slate-900
               placeholder:text-slate-400
               focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/30
             "
@@ -219,7 +219,7 @@ export default function SearchForm() {
               w-full sm:w-auto
             "
           >
-            <SearchIcon className="h-4 w-4" />
+            <SearchIcon className="h-4 w-4 text-white" />
             Find
           </button>
         </div>
@@ -342,7 +342,7 @@ function ChevronDown(props) {
 }
 function SearchIcon(props) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" {...props}>
+    <svg viewBox="0 0 24 24" fill="none" stroke="white" {...props}>
       <circle cx="11" cy="11" r="7" strokeWidth="2" />
       <path d="M20 20l-3.5-3.5" strokeWidth="2" strokeLinecap="round" />
     </svg>

@@ -150,7 +150,7 @@ export default function CabitHome() {
 
             <div className="mt-6">
               <Link
-                href="/PlanTrip"
+                href="/itinerary/city"
                 className="inline-flex no-underline items-center gap-2 rounded-full bg-[#FFE966] px-5 py-2.5 text-[15px] font-semibold text-black shadow-sm hover:scale-[1.02] transition-transform"
               >
                 Plan now!

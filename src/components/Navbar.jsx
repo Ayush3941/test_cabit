@@ -51,9 +51,9 @@ function useClickAway(ref, onAway) {
 
 /* ------------------------- Reusable bits ------------------------- */
 const NAV = [
-  { href: '/', label: 'Home' },
-  { href: '/AboutUs', label: 'About Us' },
-  { href: '/VisitingPlaces', label: 'Destinations' },
+  // { href: '/', label: 'Home' },
+  { href: '/VisitingPlaces', label: 'Discover' },
+  { href: '/AboutUs', label: 'About' },
   { href: '/ContactUs', label: 'Contact' },
 ];
 
@@ -67,12 +67,12 @@ function NavItem({ href, label, onClick }) {
       onClick={onClick}
       aria-current={active ? 'page' : undefined}
       className={[
-        'group relative px-3 py-2 text-sm font-medium no-underline',
-        active ? 'text-white' : 'text-white/85 hover:text-white',
-        'rounded-lg transition-colors hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 focus:ring-offset-transparent',
+        'group relative px-3 py-2 text-base text-center font-medium no-underline',
+        active ? 'text-black' : 'text-black hover:text-[#FFE966]',
+        'rounded-lg transition-colors hover:bg-white/5 focus:outline-none focus:ring-1 focus:ring-amber-300 focus:ring-offset-2 focus:ring-offset-transparent',
         // active underline glow line
         active
-          ? 'after:absolute after:-bottom-0.5 after:left-3 after:right-3 after:h-0.5 after:bg-gradient-to-r after:from-transparent after:via-amber-400 after:to-transparent after:content-[""]'
+          ? 'after:absolute after:-bottom-0.5 after:left-3 after:right-3 after:h-0.5 after:bg-gradient-to-r after:from-transparent after:via-amber-300 after:to-transparent after:content-[""]'
           : 'after:absolute after:-bottom-0.5 after:left-6 after:right-6 after:h-0.5 after:bg-gradient-to-r after:from-transparent after:via-white/30 after:to-transparent after:opacity-0 after:transition-opacity group-hover:after:opacity-70 after:content-[""]',
       ].join(' ')}
     >
@@ -94,7 +94,7 @@ function NavLinks({ onClick }) {
 function PlanTripButton({ onClick, className = '' }) {
   return (
     <Link
-      href="/PlanTrip"
+      href="/itinerary/city"
       onClick={onClick}
       className={[
         'no-underline inline-flex items-center justify-center rounded-xl',
@@ -116,8 +116,8 @@ function LoginButton({ onClick, className = '' }) {
       onClick={onClick}
       className={[
         'no-underline inline-flex items-center justify-center rounded-xl',
-        'bg-white/10 text-white px-4 py-2 text-sm font-semibold backdrop-blur',
-        'border border-white/20 hover:bg-white/15 active:scale-[0.98]',
+        'bg-white text-[#FFE966] px-4 py-2 text-sm font-semibold backdrop-blur',
+        'border-2 border-[#FFE966] hover:bg-white/15 active:scale-[0.98]',
         'focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2',
         className,
       ].join(' ')}
@@ -192,26 +192,26 @@ function Burger({ open, onClick }) {
       onClick={onClick}
       className="
         md:hidden inline-flex h-10 w-10 items-center justify-center rounded-lg
-        text-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-amber-500
+        text-black hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-amber-500
         z-[10000]
       "
     >
       <span className="relative block h-5 w-6">
         <span
           className={[
-            'absolute left-0 top-0 h-0.5 w-6 bg-white transition-transform duration-300',
+            'absolute left-0 top-0 h-0.5 w-6 bg-black transition-transform duration-300',
             open ? 'translate-y-2.5 rotate-45' : '',
           ].join(' ')}
         />
         <span
           className={[
-            'absolute left-0 top-2.5 h-0.5 w-6 bg-white transition-opacity duration-300',
+            'absolute left-0 top-2.5 h-0.5 w-6 bg-black transition-opacity duration-300',
             open ? 'opacity-0' : 'opacity-100',
           ].join(' ')}
         />
         <span
           className={[
-            'absolute left-0 bottom-0 h-0.5 w-6 bg-white transition-transform duration-300',
+            'absolute left-0 bottom-0 h-0.5 w-6 bg-black transition-transform duration-300',
             open ? '-translate-y-2.5 -rotate-45' : '',
           ].join(' ')}
         />
@@ -238,12 +238,12 @@ export default function NavBarHome() {
   return (
     <header className="fixed inset-x-0 top-0 z-[10000]">
       {/* Gradient overlay bar */}
-      <div className="bg-gradient-to-b from-black to-black/0">
-        <nav className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      <div className="bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+        <nav className="mx-auto flex h-20 w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           {/* Left: logo image */}
           <div className="flex items-center gap-3">
             <Link href="/" className="no-underline flex items-center">
-              <img src="/images/CabitImageW.png" alt="Cabit" className="h-8 w-auto sm:h-9" />
+              <img src="/images/logo.png" alt="Cabit" className="h-12 w-auto sm:h-28" />
             </Link>
           </div>
 
@@ -275,7 +275,7 @@ export default function NavBarHome() {
       {/* Mobile panel */}
       <div
         className={[
-          'md:hidden origin-top bg-black shadow-xl transition-transform duration-300',
+          'md:hidden origin-top bg-white shadow-xl transition-transform duration-300',
           menuOpen ? 'scale-y-100' : 'scale-y-0',
         ].join(' ')}
       >

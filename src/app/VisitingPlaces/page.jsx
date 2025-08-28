@@ -413,7 +413,7 @@ export default function TouristAttractions() {
       <NavBarNormal />
 
       {/* HERO */}
-      <section className="relative isolate bg-[url('/images/3rdBackground.png')] bg-top bg-no-repeat bg-cover pt-24 pb-20">
+      <section className="relative isolate bg-[url('/images/3rdBackground.png')] bg-top bg-no-repeat bg-cover pt-40 pb-20">
         {/* overlay gradient */}
         <div className="absolute inset-0 bg-gradient-to-t from-amber-200/70 to-white/90" />
         <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">

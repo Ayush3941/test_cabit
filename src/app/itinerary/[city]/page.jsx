@@ -34,6 +34,7 @@ export default function ItineraryPage() {
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState("");
   const [activeDay, setActiveDay] = useState(0);
+  const [heroCity, setHeroCity] = useState("");
 
   const scrollToId = (id) => {
     const el = document.getElementById(id);
@@ -42,66 +43,79 @@ export default function ItineraryPage() {
   };
 
   useEffect(() => {
-    const ctrl = new AbortController();
+  const ctrl = new AbortController();
 
-    const slug = decodeURIComponent((pathname || "").split("/").pop() || "");
-    const city = toTitle(slug);
-    if (!city) return;
+  const slug = decodeURIComponent((pathname || "").split("/").pop() || "");
+  const city = toTitle(slug);
 
-    const p = new URLSearchParams(qs?.toString() || "");
-    const days = p.get("days");
-    const interests = p.get("interests");
-    const pace = p.get("pace");
-    const budget_level = p.get("budget_level");
-    const sc = p.get("starting_city");
+  // bail early if no city in path
+  if (!city) return;
 
-    const overrideBody = {};
-    if (days) overrideBody.days = Number(days);
-    if (interests) overrideBody.interests = splitCSV(interests);
-    if (pace) overrideBody.pace = pace;
-    if (budget_level) overrideBody.budget_level = budget_level;
-    if (sc) overrideBody.starting_city = toTitle(sc);
+  const p = new URLSearchParams(qs?.toString() || "");
+  const places = p.get("places")
+  const days = p.get("days");
+  const interests = p.get("interests");
+  const pace = p.get("pace");
+  const budget_level = p.get("budget_level");
+  const sc = p.get("starting_city");
 
-    (async () => {
-      try {
-        setLoading(true);
-        setErr("");
-        setData(null);
+  // ✅ if required params are missing, don’t fire API
+  if (!days || !interests || !pace || !budget_level) {
+    return;
+  }
 
-        const body = {
-          starting_city: overrideBody.starting_city || city,
-          places: [city],
-          ...overrideBody,
-        };
+  const overrideBody = {};
+  if (places) overrideBody.places = splitCSV(places)
+  if (days) overrideBody.days = Number(days);
+  if (interests) overrideBody.interests = splitCSV(interests);
+  if (pace) overrideBody.pace = pace;
+  if (budget_level) overrideBody.budget_level = budget_level;
+  if (sc) overrideBody.starting_city = toTitle(sc);
 
-        const res = await fetch("/api/itinerary", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(body),
-          signal: ctrl.signal,
-          cache: "no-store",
-        });
+  setHeroCity(places || toTitle(decodeURIComponent((pathname || "").split("/").pop() || "")));
 
-        if (!res.ok) {
-          let detail = "";
-          try {
-            const j = await res.json();
-            detail = j?.body || j?.error || JSON.stringify(j);
-          } catch {}
-          throw new Error(`HTTP ${res.status}${detail ? ` — ${detail}` : ""}`);
-        }
-        const json = await res.json();
-        setData(json);
-      } catch (e) {
-        const message = e && e.message ? e.message : String(e);
-        if (e?.name !== "AbortError") setErr(`Failed to load itinerary: ${message}`);
-      } finally {
-        setLoading(false);
+  (async () => {
+    try {
+      setLoading(true);
+      setErr("");
+      setData(null);
+
+      const body = {
+        starting_city: overrideBody.starting_city || city,
+        places: [splitCSV(places)],
+        ...overrideBody,
+      };
+
+      const res = await fetch("/api/itinerary", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+        signal: ctrl.signal,
+        cache: "no-store",
+      });
+
+      if (!res.ok) {
+        let detail = "";
+        try {
+          const j = await res.json();
+          detail = j?.body || j?.error || JSON.stringify(j);
+        } catch {}
+        throw new Error(`HTTP ${res.status}${detail ? ` — ${detail}` : ""}`);
       }
-    })();
+      const json = await res.json();
+      setData(json);
+    } catch (e) {
+      const message = e && e.message ? e.message : String(e);
+      if (e?.name !== "AbortError")
+        setErr(`Failed to load itinerary: ${message}`);
+    } finally {
+      setLoading(false);
+    }
+  })();
 
-    return () => ctrl.abort();
-  }, [pathname, qs]);
+  return () => ctrl.abort();
+}, [pathname, qs]);
+
 
   // cities list
   const cities = useMemo(() => {
@@ -129,7 +143,7 @@ export default function ItineraryPage() {
     return () => obs.disconnect();
   }, [data]);
 
-  const heroCity = toTitle(decodeURIComponent((pathname || "").split("/").pop() || ""));
+  // const heroCity = toTitle(decodeURIComponent((pathname || "").split("/").pop() || ""));
 
   return (
     <div className="min-h-screen bg-neutral-50 text-neutral-900">
@@ -137,7 +151,7 @@ export default function ItineraryPage() {
       <br/><br/><br/>
 
       {/* SEARCH BELOW NAVBAR — slight overlap on md+ for depth */}
-      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 pt-10 sm:pt-8 lg:pt-10">
+      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 pt-10 sm:pt-8 lg:py-20">
         <div className="-mt-4 sm:-mt-6 lg:-mt-8">
           <div className="rounded-2xl bg-white/95 px-6 py-5 sm:px-8 sm:py-6 shadow-lg ring-1 ring-black/5 backdrop-blur">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
@@ -313,7 +327,7 @@ export default function ItineraryPage() {
                       <div className="inline-flex items-center rounded-full bg-amber-400/95 px-3 py-1 text-xs font-black uppercase tracking-widest text-black">
                         Day {idx + 1}
                       </div>
-                      <h2 className="mt-2 text-2xl font-extrabold tracking-tight drop-shadow">
+                      <h2 className="mt-2 text-2xl text-white font-extrabold tracking-tight drop-shadow">
                         {day.city}
                       </h2>
                       {day.lodging_suggestions && (
